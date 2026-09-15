@@ -1,0 +1,6 @@
+{
+  "name": "KHTN 8 Smart Notebook",
+  "description": "Nền tảng Sổ tay Thông minh KHTN 8 Kết nối tri thức: 47 bài học SGK, Giải quyết vấn đề liên môn & Đồ thị tri thức (Spec 18), Smart Knowledge Export Engine (Spec 15) xuất DOCX/PDF/In ấn, Kho công thức chuẩn hóa & Sổ cái thẩm định Formula Gate (Specs 19-21), Ma trận hiện tượng thực tế và Gia sư Socratic AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
