@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Be Vietnam Pro', 'Noto Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Spec 17: Document Export & Print Engine Styles */
+@media print {
+  /* Hide all interactive UI and navigation in print mode */
+  header, nav, footer, button, .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-family: 'Noto Sans', 'Times New Roman', serif !important;
+    font-size: 11pt !important;
+    line-height: 1.5 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 18mm 18mm 18mm 18mm;
+  }
+
+  .print-page-break {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .print-avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  #printable-document {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+    color: #000000 !important;
+    overflow: visible !important;
+    max-height: none !important;
+  }
+
+  /* Force dark elements to print crisp and legible */
+  #printable-document * {
+    color: #000000 !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  /* Preserve formula display in print */
+  .katex-display {
+    margin: 0.5em 0 !important;
+  }
+}

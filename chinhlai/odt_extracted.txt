@@ -1,0 +1,29 @@
+KHTN 8 Smart Notebook
+Lĩnh vực Vật lí
+Bài 13. Khối lượng riêng
+Chỗ sai
+Lỗi sai
+Đúng
+Khắc phục
+Côngthức tính khối lượng của vật
+D = V.m
+m = D.V
+bỏ phần công thức D = V.m, chỉ để lại công thức D = m/V
+công thức M=F.d bị lặp lại 2 lần
+công thức M=F.d chỉ xuất hiện 1 lần trong phần tóm tắt
+loại bỏ công thức M=F.d thừa, chỉ để lại 1 công thức
+lỗi saivề môn Vật Lí, Hóa Học:
+vấn đề liên môn:sai công thức, lặp lại công thức.
+vấn đề liên môn:lặp lại câu hỏi, các phưong án trả lời đều giống nhau.
+vấn đề liên môn:công thức cần viết rõ và đúng hơn.
+chat:
+chưa có API ( chưa thể xử lí dữ liệu, cần phải học thêm để phản ứng và trả lời lại các câu hỏi).
+xuất gói tri thức bị lỗi phong chữ và nội dung ở một số trang đầu
+xuất gói tri thức bị lỗi ở phần chọn phân môn và bài học nên không thể xuất baì hay phân môn mình muốn.
+xuất gói tri thức:ôn tập nha, hiện tưọng thực tế giống nhau về phần bài tập, không có phần tình huống trong phần hiện tưọng thực tế
+xuất gói tri thức: luyện tập, gói giáo viên, gói học sinh, luyện thi giống nhau về phần bài tập và nội dung.
+xuất gói tri thức: công thức bị lỗi và sai
+kho công thức QA(thẻ công thức): sai về phần công thức
+Kho công thức QA (số cái thẩm định): lỗi về mặt công thức
+Gia sư: chưa có API nên chưa hiểu và phản hồi đúng với yêu cầu của ngưòi dùng
+app vẫn còn đang gắn mặc định một số bài học và chưa chongườidùng chọn bài học theo ý muốn

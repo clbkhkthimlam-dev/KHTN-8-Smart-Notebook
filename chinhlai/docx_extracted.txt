@@ -1,0 +1,24 @@
+#
+Tên đề tài
+Điểm mạnh
+Điểm yếu
+1
+Xây dựng hệ thống Sổ tay Khoa học tự nhiên thông minh ứng dụng AI nhằm cá nhân hóa học tập và phát triển năng lực khoa học cho học sinh THCS
+Bao quát Lý–Hóa–Sinh; sản phẩm trực quan; dễ triển khai website/game; phù hợp thực tế dạy KHTN 2018
+Phạm vi rộng; nếu chỉ dừng ở “sổ tay + AI” thì tính mới khoa học chưa cao
+2
+Nghiên cứu và xây dựng hệ thống học tập thích ứng môn Khoa học tự nhiên dựa trên dữ liệu quá trình học tập của học sinh THCS
+Tính nghiên cứu cao; có vòng lặp đánh giá → AI phân tích → cá nhân hóa → đánh giá lại; dễ làm thực nghiệm
+Cần thu thập dữ liệu đủ lớn và xây dựng thuật toán thích ứng hợp lý
+3
+Xây dựng bản đồ năng lực Khoa học tự nhiên và hệ thống hỗ trợ học tập cá nhân hóa bằng AI cho học sinh THCS
+Mạnh nhất về nghiên cứu; tạo hồ sơ năng lực từng học sinh; có thể chứng minh sự tiến bộ bằng dữ liệu; rất phù hợp KHKT
+Khó hơn; phải xây dựng bộ tiêu chí/rubric đánh giá năng lực đáng tin cậy
+4
+Nghiên cứu hệ thống trò chơi và tình huống học tập thích ứng nhằm phát hiện và khắc phục lỗ hổng kiến thức trong môn Khoa học tự nhiên
+Hấp dẫn học sinh; dễ trình diễn tại cuộc thi; dữ liệu hành vi phong phú; dễ phát triển thành game
+Thiên về sản phẩm; nếu thiếu mô hình đánh giá khoa học thì dễ bị xem là “làm game giáo dục”
+5
+Xây dựng hệ thống bản đồ tri thức liên môn Lý – Hóa – Sinh kết hợp AI nhằm phát triển năng lực vận dụng kiến thức Khoa học tự nhiên cho học sinh THCS
+Giải quyết đúng vấn đề KHTN tích hợp nhưng việc học thường bị phân mảnh; tính mới tốt; có chiều sâu liên môn
+Khó thiết kế mạng lưới kiến thức và đánh giá chính xác khả năng kết nối Lý–Hóa–Sinh
