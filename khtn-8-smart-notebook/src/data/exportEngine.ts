@@ -65,6 +65,7 @@ function inlineFormula(latex: string): string {
 function formatScientificText(text: string): string {
   let result = text;
   const replacements: Array<[RegExp, string | ((substring: string, ...args: any[]) => string)]> = [
+    [/\bD\s*=\s*V\s*(?:m|[.*·×]\s*m)\b/gi, inlineFormula("D = \\frac{m}{V}")],
     [/\bD\s*=\s*m\s*\/\s*V\b/g, inlineFormula("D = \\frac{m}{V}")],
     [/\bρ\s*=\s*m\s*\/\s*V\b/g, inlineFormula("\\rho = \\frac{m}{V}")],
     [/\brho\s*=\s*m\s*\/\s*V\b/g, inlineFormula("\\rho = \\frac{m}{V}")],

@@ -62,7 +62,7 @@ export const CANONICAL_FORMULA_DATABASE: ExtendedFormulaItem[] = [
       whenForbidden: [
         "Không dùng D = m/V của toàn vật để suy ra khối lượng riêng vật liệu khi vật có khoang rỗng hoặc gồm nhiều vật liệu",
         "Không dùng khi đơn vị chưa quy đổi về chuẩn (ví dụ để m = gam nhưng V = m³)",
-        "Tuyệt đối không nhầm lẫn công thức thành D = m · V hoặc D = V · m (đây là biến đổi sai toán học; D tỉ lệ nghịch với V)"
+        "Không được nhân m với V trong công thức khối lượng riêng; D tỉ lệ nghịch với V khi m không đổi"
       ]
     },
     knownRearrangements: [

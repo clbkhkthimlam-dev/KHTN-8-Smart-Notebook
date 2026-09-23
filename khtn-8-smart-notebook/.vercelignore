@@ -1,0 +1,6 @@
+chinhlai/
+node_modules/
+dist/
+*.docx
+*.odt
+*.pdf
