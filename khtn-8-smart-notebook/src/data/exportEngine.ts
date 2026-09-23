@@ -48,6 +48,66 @@ function generateDeterministicHash(contentStr: string): string {
   return `PKG-KHTN8-${positive.toUpperCase()}`;
 }
 
+/** Normalize the scientific notation used in Markdown exports. */
+function normalizeFormulaLatex(latex: string): string {
+  return latex
+    .replace(/\brho\b/g, "\\rho")
+    .replace(/\bdelta\b/g, "\\Delta")
+    .replace(/\bV_chìm\b/g, "V_{\\mathrm{chìm}}")
+    .replace(/\b([A-Za-z])([0-9]+)\b/g, "$1_{$2}");
+}
+
+function inlineFormula(latex: string): string {
+  return `$${normalizeFormulaLatex(latex)}$`;
+}
+
+/** Convert common source-text formula spellings to inline LaTeX. */
+function formatScientificText(text: string): string {
+  let result = text;
+  const replacements: Array<[RegExp, string | ((substring: string, ...args: any[]) => string)]> = [
+    [/\bD\s*=\s*m\s*\/\s*V\b/g, inlineFormula("D = \\frac{m}{V}")],
+    [/\bρ\s*=\s*m\s*\/\s*V\b/g, inlineFormula("\\rho = \\frac{m}{V}")],
+    [/\brho\s*=\s*m\s*\/\s*V\b/g, inlineFormula("\\rho = \\frac{m}{V}")],
+    [/\bp\s*=\s*F\s*\/\s*S\b/g, inlineFormula("p = \\frac{F}{S}")],
+    [/\bp\s*=\s*d\s*[.*·×]\s*h\b/g, inlineFormula("p = d \\times h")],
+    [/\bF_A\s*=\s*d\s*[.*·×]\s*V(?:_chìm)?\b/g, inlineFormula("F_A = d \\times V_{\\mathrm{chìm}}")],
+    [/\bM\s*=\s*F\s*[.*·×]\s*d\b/g, inlineFormula("M = F \\times d")],
+    [/\bn\s*=\s*m\s*\/\s*M\b/g, inlineFormula("n = \\frac{m}{M}")],
+    [/\bC%\s*=\s*\(?\s*m_ct\s*\/\s*m_dd\s*\)?\s*[.*·×]\s*100%/g, inlineFormula("C\\% = \\frac{m_{ct}}{m_{dd}} \\times 100\\%")],
+    [/6,022\s*[x×]\s*10\^23/g, inlineFormula("6{,}022 \\times 10^{23}")],
+    [/\bH\s*=\s*\(?\s*m_tt\s*\/\s*m_lt\s*\)?\s*[.*·×]\s*100%/g, inlineFormula("H = \\frac{m_{tt}}{m_{lt}} \\times 100\\%")],
+    [/(?<![A-Za-z$])m\s*\/\s*V(?![A-Za-z])/g, inlineFormula("\\frac{m}{V}")],
+    [/(?<![A-Za-z$])d\s*[.*·×]\s*V(?:_chìm)?(?![A-Za-z])/g, inlineFormula("d \\times V_{\\mathrm{chìm}}")],
+    [/(?<![A-Za-z$])10\^([0-9-]+)(?![A-Za-z])/g, (_match: string, exponent: string) => inlineFormula(`10^{${exponent}}`)],
+    [/\b(CO2|H2O|H2SO4|CaCO3|CaO|NaHCO3)\b/g, (match) => `$${match.replace(/([A-Za-z])([0-9]+)/g, "$1_$2")}$`]
+  ];
+  replacements.forEach(([pattern, replacement]) => {
+    result = typeof replacement === "function"
+      ? result.replace(pattern, replacement as (substring: string, ...args: any[]) => string)
+      : result.replace(pattern, replacement);
+  });
+  return result;
+}
+
+function unitLatex(unit: string): string {
+  return unit
+    .replace(/kg\/m³/g, "\\mathrm{kg/m^3}")
+    .replace(/g\/cm³/g, "\\mathrm{g/cm^3}")
+    .replace(/N\/m³/g, "\\mathrm{N/m^3}")
+    .replace(/N\/m²/g, "\\mathrm{N/m^2}")
+    .replace(/cm²/g, "\\mathrm{cm^2}")
+    .replace(/cm³/g, "\\mathrm{cm^3}")
+    .replace(/m²/g, "\\mathrm{m^2}")
+    .replace(/m³/g, "\\mathrm{m^3}");
+}
+
+function renderFormulaVariables(variables: { symbol: string; name: string; unit: string; description: string }[]): string[] {
+  return variables.flatMap((variable) => [
+    `- ${inlineFormula(variable.symbol)}: ${variable.name} - ${formatScientificText(variable.description)}`,
+    `  - Đơn vị: ${inlineFormula(unitLatex(variable.unit))}`
+  ]);
+}
+
 /**
  * Knowledge Package Builder adhering strictly to Spec 15
  */
@@ -152,6 +212,7 @@ export function buildKnowledgePackage(
   // 5. Resolve Exercises (Tầng 2 - Exercise Relevance Engine)
   const relevantExercises: ExerciseItem[] = [];
   if (layers.includePractice) {
+    const lessonExerciseCounts = new Map<number, number>();
     EXERCISES_BANK.forEach((ex) => {
       // Relevance score formula from Spec 15:
       // relevance = 0.35 * atom_match + 0.20 * lesson_match + 0.15 * skill_match + 0.10 * formula_match
@@ -165,11 +226,13 @@ export function buildKnowledgePackage(
         const matchesCog = exerciseFilter.cognitiveLevels.includes(ex.cognitive_level);
         const matchesType = exerciseFilter.questionTypes.includes(ex.question_type);
 
-        if (matchesDiff && matchesCog && matchesType) {
+        const currentLessonCount = lessonExerciseCounts.get(ex.lesson_id) || 0;
+        if (matchesDiff && matchesCog && matchesType && currentLessonCount < exerciseFilter.maxPerLesson) {
           relevantExercises.push({
             ...ex,
             relevance_score: Math.round(score * 100) / 100
           });
+          lessonExerciseCounts.set(ex.lesson_id, currentLessonCount + 1);
         }
       }
     });
@@ -301,18 +364,35 @@ export function renderPackageToMarkdown(pkg: KnowledgePackage): string {
     lines.push(`*Nguồn: SGK tr.${lesson.sgkStartPage}-${lesson.sgkEndPage} | SGV tr.${lesson.sgvStartPage}*`);
     
     lines.push(`\n**Yêu cầu cần đạt (YCCD):**`);
-    lesson.yccd.forEach((y) => lines.push(`- [x] ${y}`));
+    lesson.yccd.forEach((y) => lines.push(`- [x] ${formatScientificText(y)}`));
 
     if (lesson.atoms && lesson.atoms.length > 0) {
       lines.push(`\n**Các hạt nhân tri thức:**`);
       lesson.atoms.forEach((atom) => {
-        lines.push(`\n#### 🔹 Hạt nhân \`${atom.atom_id}\`: ${atom.title || atom.topic}`);
-        lines.push(`- **Định nghĩa / Bản chất:** ${atom.canonical_explanation || atom.statement || atom.definition}`);
+        lines.push(`\n#### 🔹 Hạt nhân \`${atom.atom_id}\`: ${formatScientificText(atom.title || atom.topic || "")}`);
+        lines.push(`- **Định nghĩa / Bản chất:** ${formatScientificText(atom.canonical_explanation || atom.statement || atom.definition || "")}`);
         
         if (atom.formulaLatex || atom.formula?.latex_display) {
-          lines.push(`- **Công thức chuẩn:** \`$$${atom.formulaLatex || atom.formula?.latex_display}$$\``);
+          lines.push(`\n### Công thức`);
+          lines.push(`$$`);
+          lines.push(normalizeFormulaLatex(atom.formulaLatex || atom.formula?.latex_display || ""));
+          lines.push(`$$`);
           if (atom.conditions || atom.formula?.conditions_of_validity) {
-            lines.push(`  - *Điều kiện áp dụng:* ${atom.conditions || atom.formula?.conditions_of_validity}`);
+            lines.push(`\n### Điều kiện sử dụng`);
+            lines.push(formatScientificText(atom.conditions || atom.formula?.conditions_of_validity || ""));
+          }
+          if (atom.formula?.variables) {
+            lines.push(`\n### Trong đó`);
+            lines.push(...renderFormulaVariables(atom.formula.variables));
+          }
+          if (atom.formula?.derived_forms?.length) {
+            lines.push(`\n### Biến đổi`);
+            atom.formula.derived_forms.forEach((derived) => {
+              lines.push(`\n$$`);
+              lines.push(normalizeFormulaLatex(derived.latex));
+              lines.push(`$$`);
+              lines.push(formatScientificText(derived.note));
+            });
           }
         }
 
@@ -323,9 +403,9 @@ export function renderPackageToMarkdown(pkg: KnowledgePackage): string {
         if (atom.misconceptions && atom.misconceptions.length > 0) {
           atom.misconceptions.forEach((m: any) => {
             const desc = typeof m === "string" ? m : m.description;
-            lines.push(`- ⚠️ **Lỗi nhận thức thường gặp:** ${desc}`);
+            lines.push(`- ⚠️ **Lỗi nhận thức thường gặp:** ${formatScientificText(desc)}`);
             if (m.repairStrategy) {
-              lines.push(`  - 💡 *Chiến lược khắc phục Socratic:* ${m.repairStrategy}`);
+              lines.push(`  - 💡 *Chiến lược khắc phục Socratic:* ${formatScientificText(m.repairStrategy)}`);
             }
           });
         }
@@ -338,9 +418,15 @@ export function renderPackageToMarkdown(pkg: KnowledgePackage): string {
     lines.push(`\n---\n`);
     lines.push(`## II. KHO CÔNG THỨC CHUẨN ĐÃ QUA FORMULA GATE`);
     pkg.content.formulas.forEach((f) => {
-      lines.push(`\n### Công thức \`${f.formula_id}\`: ${f.topic}`);
-      lines.push(`$$\n${f.latex_display}\n$$`);
-      lines.push(`- **Điều kiện biên:** ${f.conditions}`);
+      lines.push(`\n### Công thức \`${f.formula_id}\`: ${formatScientificText(f.topic)}`);
+      lines.push(`$$`);
+      lines.push(normalizeFormulaLatex(f.latex_display));
+      lines.push(`$$`);
+      lines.push(`- **Điều kiện sử dụng:** ${formatScientificText(f.conditions)}`);
+      if (f.variables?.length) {
+        lines.push(`\n**Trong đó:**`);
+        lines.push(...renderFormulaVariables(f.variables));
+      }
       lines.push(`- **Chứng thực nguồn:** ${f.source_anchor}`);
     });
   }
@@ -354,8 +440,8 @@ export function renderPackageToMarkdown(pkg: KnowledgePackage): string {
       lines.push(`\n### 🌍 Hiện tượng quan sát tự nhiên:`);
       pkg.content.phenomena.forEach((p) => {
         lines.push(`\n#### 🔬 ${p.name} (Bài ${p.lessonId})`);
-        lines.push(`- **Câu hỏi khám phá:** *${p.inquiryQuestion}*`);
-        lines.push(`- **Giải thích khoa học:** ${p.scientificExplanation}`);
+        lines.push(`- **Câu hỏi khám phá:** *${formatScientificText(p.inquiryQuestion)}*`);
+        lines.push(`- **Giải thích khoa học:** ${formatScientificText(p.scientificExplanation)}`);
       });
     }
 
@@ -363,9 +449,9 @@ export function renderPackageToMarkdown(pkg: KnowledgePackage): string {
       lines.push(`\n### 🌐 Các tình huống thực tiễn tiêu biểu:`);
       pkg.content.scenarios.slice(0, 10).forEach((s) => {
         lines.push(`\n- **[${s.contextClass.toUpperCase()}] ${s.title}:**`);
-        lines.push(`  - *Hiện tượng:* ${s.phenomenon}`);
-        lines.push(`  - *Câu hỏi giải quyết:* ${s.question}`);
-        lines.push(`  - *Cơ chế:* ${s.explanationRoute}`);
+        lines.push(`  - *Hiện tượng:* ${formatScientificText(s.phenomenon)}`);
+        lines.push(`  - *Câu hỏi giải quyết:* ${formatScientificText(s.question)}`);
+        lines.push(`  - *Cơ chế:* ${formatScientificText(s.explanationRoute)}`);
       });
     }
   }
@@ -376,15 +462,15 @@ export function renderPackageToMarkdown(pkg: KnowledgePackage): string {
     lines.push(`## IV. HỆ THỐNG BÀI TẬP VÀ ĐÁNH GIÁ NĂNG LỰC`);
     pkg.content.exercises.forEach((ex, idx) => {
       lines.push(`\n### Bài tập ${idx + 1} [\`${ex.exercise_id}\` • Độ khó ${ex.difficulty}/5 • ${ex.cognitive_level.toUpperCase()}]`);
-      lines.push(`**Đề bài:** ${ex.prompt}`);
+      lines.push(`**Đề bài:** ${formatScientificText(ex.prompt)}`);
       
       if (ex.options && ex.options.length > 0) {
         ex.options.forEach((opt) => lines.push(`- ${opt}`));
       }
 
-      lines.push(`\n> **Đáp án chuẩn:** **${ex.correct_answer}**`);
-      lines.push(`> **Lời giải chi tiết:** ${ex.detailed_solution}`);
-      lines.push(`> **Gợi ý Socratic:** *${ex.socratic_hint}*`);
+      lines.push(`\n> **Đáp án chuẩn:** **${formatScientificText(ex.correct_answer)}**`);
+      lines.push(`> **Lời giải chi tiết:** ${formatScientificText(ex.detailed_solution)}`);
+      lines.push(`> **Gợi ý Socratic:** *${formatScientificText(ex.socratic_hint)}*`);
     });
   }
 

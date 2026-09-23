@@ -188,7 +188,7 @@ export const SCENARIO_PACKS_DATABASE: ScenarioPack[] = [
         "Moment lực M (N.m)"
       ],
       what_can_be_inferred: [
-        "Tác dụng làm quay của lực lên bu-lông không chỉ phụ thuộc vào độ lớn của lực F mà phụ thuộc vào tích M = F * d",
+        "Tác dụng làm quay của lực lên bu-lông không chỉ phụ thuộc vào độ lớn của lực F mà phụ thuộc vào tích M = F · d",
         "Khi tăng chiều dài cánh tay đòn d lên 4 lần (từ 0.25 m lên 1.0 m), moment lực M tăng gấp 4 lần với cùng một lực F = 650 N",
         "Muốn tạo cùng một moment tháo ốc M_tháo, nếu d càng lớn thì lực F cần thiết càng nhỏ"
       ],
@@ -196,7 +196,7 @@ export const SCENARIO_PACKS_DATABASE: ScenarioPack[] = [
         "KHÔNG ĐƯỢC suy đoán cán cờ lê càng dài thì lực tác dụng tự động lớn lên; lực là do con người tác dụng, cái tăng là MOMENT LỰC",
         "KHÔNG ĐƯỢC xem chiều dài thước là cánh tay đòn nếu lực tác dụng bị xiên không vuông góc với cán"
       ],
-      atom_relation: "ATOM_18_01 (Moment lực M = F * d)",
+      atom_relation: "ATOM_18_01 (Mômen lực M = F · d)",
       question_targets: ["Định nghĩa tác dụng làm quay", "Xác định cánh tay đòn d", "Công thức tính moment lực"],
       source_provenance: "SGK KHTN 8 Kết nối tri thức, Tr. 77-80 & SGV Bài 18"
     },
@@ -208,7 +208,7 @@ export const SCENARIO_PACKS_DATABASE: ScenarioPack[] = [
       },
       layerB_concept: {
         question: "Trong SGK KHTN 8, đại lượng vật lí đặc trưng cho tác dụng làm quay của lực được gọi là gì và tính theo công thức nào?",
-        related_concept: "Moment lực M = F * d",
+        related_concept: "Mômen lực M = F · d",
         formula_latex: "M = F \\cdot d",
         guide: "F là độ lớn lực tác dụng (N), d là khoảng cách từ trục quay đến giá của lực (cánh tay đòn, đơn vị m)."
       },
@@ -219,7 +219,7 @@ export const SCENARIO_PACKS_DATABASE: ScenarioPack[] = [
       },
       layerD_decision_transfer: {
         question: "Trong sinh hoạt gia đình, tại sao tay nắm cánh cửa phòng luôn được gắn ở mép ngoài đối diện bản lề thay vì gắn sát vào cạnh có bản lề?",
-        what_if_variant: "Nếu gắn tay nắm sát bản lề (d rất bé), moment quay M = F*d bé tí khiến việc đẩy cửa cực kỳ nặng nề và khó khăn.",
+        what_if_variant: "Nếu gắn tay nắm sát bản lề (d rất bé), mômen quay M = F · d rất nhỏ khiến việc đẩy cửa cực kỳ nặng nề và khó khăn.",
         decision_matrix: "Bản lề là trục quay; gắn tay nắm ở mép ngoài làm tăng tối đa khoảng cách d, giúp chỉ cần một lực đẩy ngón tay nhẹ cũng đủ làm quay cánh cửa."
       }
     },
@@ -243,7 +243,7 @@ export const SCENARIO_PACKS_DATABASE: ScenarioPack[] = [
     what_if_variants: [
       {
         condition: "Nếu người thợ tác dụng lực đẩy theo phương đi qua đúng tâm trục quay O của bu lông?",
-        consequence: "Khoảng cách từ trục quay đến giá của lực d = 0, moment lực M = F * 0 = 0 -> Lực không có tác dụng làm quay bu lông dù lực lớn bao nhiêu."
+        consequence: "Khoảng cách từ trục quay đến giá của lực d = 0, mômen lực M = F · 0 = 0 -> lực không có tác dụng làm quay bu-lông dù lực lớn bao nhiêu."
       }
     ],
     local_variants: [

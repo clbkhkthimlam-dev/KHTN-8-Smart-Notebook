@@ -35,7 +35,7 @@ export const PHENOMENA_CATALOG: PhenomenonItem[] = [
       "Tay cầm đặt càng xa tâm bu lông thì việc vặn ốc càng nhẹ nhàng"
     ],
     inquiryQuestion: "Tại sao lực tác dụng của cơ bắp không đổi nhưng nối dài cán cờ lê lại làm tăng khả năng vặn quay bu lông?",
-    scientificExplanation: "Tác dụng làm quay của lực lên vật quanh một trục cố định được đặc trưng bởi Moment lực M = F * d. Khi tăng khoảng cách d từ trục quay đến giá của lực lên gấp 4 lần, moment lực M tăng gấp 4 lần với cùng một lực F, tạo đủ moment M vượt lực cản ma sát của ốc.",
+    scientificExplanation: "Tác dụng làm quay của lực lên vật quanh một trục cố định được đặc trưng bởi mômen lực M = F · d. Khi tăng khoảng cách d từ trục quay đến giá của lực lên gấp 4 lần, mômen lực M tăng gấp 4 lần với cùng một lực F, tạo đủ mômen để vượt lực cản ma sát của ốc.",
     relevantAtomId: "ATOM_18_01",
     experimentSuggestion: "Dùng thước dẹt có gắn quả nặng ở các khoảng cách khác nhau so với trục quay để cảm nhận lực cản quay.",
     imageUrl: "https://images.unsplash.com/photo-1486006920555-c77dce18193b?w=900&auto=format&fit=crop&q=80",

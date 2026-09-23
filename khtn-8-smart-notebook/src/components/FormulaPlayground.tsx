@@ -50,7 +50,8 @@ export const CANONICAL_FORMULA_DATABASE: ExtendedFormulaItem[] = [
       { symbol: "V", name: "Thể tích vật", meaning: "Độ lớn không gian mà vật chiếm chỗ", siUnit: "m³", sourceDefined: true }
     ],
     conditions: [
-      "Vật thể phải đồng chất, không có bọt khí hoặc khoang rỗng bên trong",
+      "Mẫu phải đại diện cho cùng một chất; nếu có khoang rỗng hoặc nhiều vật liệu thì m/V chỉ là khối lượng riêng trung bình của toàn mẫu",
+      "Nhiệt độ và áp suất phải được xác định vì khối lượng riêng có thể thay đổi theo các điều kiện này",
       "Khối lượng m đo bằng kilôgam (kg), thể tích V đo bằng mét khối (m³)"
     ],
     applicability: {
@@ -59,7 +60,7 @@ export const CANONICAL_FORMULA_DATABASE: ExtendedFormulaItem[] = [
         "Tính khối lượng của vật có kích thước quá lớn không thể cân trực tiếp (m = D · V)"
       ],
       whenForbidden: [
-        "Không dùng cho vật rỗng có nhiều khoang không khí (như tàu thuyền vỏ rỗng, phải dùng D_trung_bình)",
+        "Không dùng D = m/V của toàn vật để suy ra khối lượng riêng vật liệu khi vật có khoang rỗng hoặc gồm nhiều vật liệu",
         "Không dùng khi đơn vị chưa quy đổi về chuẩn (ví dụ để m = gam nhưng V = m³)",
         "Tuyệt đối không nhầm lẫn công thức thành D = m · V hoặc D = V · m (đây là biến đổi sai toán học; D tỉ lệ nghịch với V)"
       ]

@@ -472,24 +472,24 @@ export const ALL_47_LESSONS: Lesson[] = [
     sgvStartPage: 80,
     yccd: [
       "Nêu được định nghĩa khối lượng riêng của một chất",
-      "Viết được công thức tính khối lượng riêng D = m / V và đơn vị đo chuẩn (kg/m3, g/cm3)",
+      "Viết được công thức tính khối lượng riêng D = m / V và đơn vị đo chuẩn (kg/m³, g/cm³)",
       "Tra cứu bảng khối lượng riêng và áp dụng tính khối lượng hoặc thể tích của vật"
     ],
     summary: "Đại lượng đặc trưng cho từng chất, cho biết khối lượng của một đơn vị thể tích chất đó; cơ sở để phân biệt chất nổi, chất chìm và chế tạo vật liệu.",
-    coreConcepts: ["Khối lượng riêng (D hay rho)", "Thể tích (V)", "Khối lượng (m)", "Đơn vị kg/m3 và g/cm3"],
+    coreConcepts: ["Khối lượng riêng (D hoặc ρ)", "Thể tích (V)", "Khối lượng (m)", "Đơn vị kg/m³ và g/cm³"],
     status: "PUBLISHED",
     atoms: [
       {
         atom_id: "ATOM_13_01",
         lesson_id: 13,
         topic: "Công thức Khối lượng riêng",
-        statement: "Khối lượng riêng của một chất được xác định bằng khối lượng của một đơn vị thể tích chất đó: D = m / V (hoặc rho = m / V).",
+        statement: "Khối lượng riêng của một chất là khối lượng trên một đơn vị thể tích của chất đó: D = m / V (hoặc ρ = m / V). Với chất tinh khiết, giá trị này phụ thuộc vào nhiệt độ và áp suất, không phụ thuộc vào kích thước hay hình dạng mẫu vật.",
         concept_type: "formula",
         source_anchors: ["SGK trang 56-57", "SGV trang 80-81"],
         terms: ["Khối lượng riêng", "Thể tích", "Khối lượng"],
         symbols: ["D", "m", "V"],
         units: ["kg/m³", "g/cm³"],
-        conditions: "Vật thể đồng chất, không có bọt khí hoặc lỗ rỗng bên trong.",
+        conditions: "Mẫu phải đại diện cho cùng một chất và không tính các khoang rỗng; nhiệt độ, áp suất phải được xác định. Với vật rỗng hoặc vật ghép, D = m/V chỉ cho khối lượng riêng trung bình của toàn vật.",
         prerequisites: ["Đo thể tích (lớp 6)", "Đo khối lượng (lớp 6)"],
         related_atoms: ["ATOM_14_01", "ATOM_17_01"],
         misconceptions: [
@@ -510,7 +510,7 @@ export const ALL_47_LESSONS: Lesson[] = [
             { symbol: "m", name: "Khối lượng", unit: "kg (hoặc g)", description: "Khối lượng của vật thể đồng chất" },
             { symbol: "V", name: "Thể tích", unit: "m³ (hoặc cm³)", description: "Thể tích không gian vật chiếm chỗ" }
           ],
-          conditions_of_validity: "Nếu m dùng kg thì V phải dùng m³; nếu m dùng g thì V phải dùng cm³ (1 g/cm³ = 1000 kg/m³).",
+          conditions_of_validity: "Nếu m dùng kg thì V phải dùng m³; nếu m dùng g thì V phải dùng cm³ (1 g/cm³ = 1000 kg/m³). D/ρ của chất tinh khiết thay đổi theo nhiệt độ và áp suất.",
           derived_forms: [
             { latex: "m = D \\cdot V", targetVariable: "m", note: "Tính khối lượng vật khi biết khối lượng riêng và thể tích" },
             { latex: "V = \\frac{m}{D}", targetVariable: "V", note: "Tính thể tích vật cần thiết" }
@@ -646,7 +646,7 @@ export const ALL_47_LESSONS: Lesson[] = [
     sgvStartPage: 88,
     yccd: [
       "Mô tả được áp suất chất lỏng tác dụng theo mọi phương và tăng theo độ sâu",
-      "Viết được công thức tính áp suất chất lỏng p = d * h",
+      "Viết được công thức tính áp suất chất lỏng p_l = d · h",
       "Nêu được bằng chứng chứng tỏ sự tồn tại của áp suất khí quyển và ứng dụng bình xịt, ống hút"
     ],
     summary: "Chất lỏng gây áp suất lên đáy bình, thành bình và các vật chìm trong nó theo mọi phương; lớp không khí bao quanh Trái Đất tạo nên áp suất khí quyển giữ cho nước trong ống hút không rơi xuống.",
@@ -675,7 +675,7 @@ export const ALL_47_LESSONS: Lesson[] = [
         atom_id: "ATOM_17_01",
         lesson_id: 17,
         topic: "Công thức Lực đẩy Archimedes",
-        statement: "Độ lớn lực đẩy Archimedes bằng trọng lượng phần chất lỏng bị vật chiếm chỗ: FA = d * V = rho * g * V.",
+        statement: "Độ lớn lực đẩy Archimedes bằng trọng lượng phần chất lỏng bị vật chiếm chỗ: F_A = d · V = ρ_l · g · V_chìm.",
         concept_type: "formula",
         source_anchors: ["SGK trang 73-74", "SGV trang 93"],
         terms: ["Lực đẩy Archimedes", "Trọng lượng riêng chất lỏng", "Thể tích phần vật chìm"],
@@ -689,20 +689,20 @@ export const ALL_47_LESSONS: Lesson[] = [
             code: "MIS_ARCHIMEDES_DEPTH",
             description: "Tưởng rằng càng lặn sâu xuống đáy nước thì lực đẩy Archimedes càng lớn.",
             counterExample: "Khi vật đã chìm hoàn toàn trong nước, thể tích V không đổi, d của nước xem như không đổi nên FA giữ nguyên dù ở độ sâu 2m hay 10m.",
-            repairStrategy: "Phân biệt rõ: áp suất tăng theo độ sâu (p = d*h), nhưng lực đẩy Archimedes FA chỉ phụ thuộc thể tích phần chìm V."
+            repairStrategy: "Phân biệt rõ: áp suất chất lỏng tăng theo độ sâu (p_l = d·h), còn lực đẩy Archimedes phụ thuộc vào trọng lượng riêng của chất lỏng và thể tích phần chìm V_chìm."
           }
         ],
         formula: {
           formula_id: "FORMULA_17_01",
           source_anchor: "SGK KHTN 8 Kết nối tri thức trang 73",
-          latex_display: "F_A = d \\cdot V",
-          plain_text: "F_A = d * V",
+          latex_display: "F_A = d \\cdot V_{\\mathrm{chìm}}",
+          plain_text: "F_A = d * V_chìm",
           variables: [
             { symbol: "F_A", name: "Lực đẩy Archimedes", unit: "N", description: "Lực nâng hướng thẳng đứng lên trên" },
-            { symbol: "d", name: "Trọng lượng riêng chất lỏng", unit: "N/m³", description: "Trọng lượng của 1 m³ chất lỏng (d = 10 * D)" },
-            { symbol: "V", name: "Thể tích phần vật chìm", unit: "m³", description: "Thể tích phần chất lỏng bị vật chiếm chỗ" }
+            { symbol: "d", name: "Trọng lượng riêng chất lỏng", unit: "N/m³", description: "Trọng lượng của 1 m³ chất lỏng (d = ρ_l g; ở lớp 8 thường lấy g ≈ 10 N/kg)" },
+            { symbol: "V_chìm", name: "Thể tích phần vật chìm", unit: "m³", description: "Thể tích phần chất lỏng bị vật chiếm chỗ" }
           ],
-          conditions_of_validity: "V phải là thể tích phần ngập trong chất lỏng, đơn vị chuẩn là mét khối (m³).",
+          conditions_of_validity: "V_chìm phải là thể tích phần ngập trong chất lỏng, tức thể tích chất lỏng bị vật chiếm chỗ; đơn vị chuẩn là mét khối (m³).",
           derived_forms: [
             { latex: "V = \\frac{F_A}{d}", targetVariable: "V", note: "Xác định thể tích phần chìm của vật nổi" },
             { latex: "d = \\frac{F_A}{V}", targetVariable: "d", note: "Xác định trọng lượng riêng chất lỏng" }

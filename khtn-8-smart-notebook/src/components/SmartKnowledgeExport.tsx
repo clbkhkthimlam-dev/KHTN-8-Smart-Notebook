@@ -71,10 +71,10 @@ export const SmartKnowledgeExport: React.FC<SmartKnowledgeExportProps> = ({
 }) => {
   // Selection State
   const [selectedChapters, setSelectedChapters] = useState<string[]>(
-    initialLessonId ? [] : ["CH_III_DENSITY_PRESSURE"]
+    []
   );
   const [selectedLessons, setSelectedLessons] = useState<number[]>(
-    initialLessonId ? [initialLessonId] : [13, 16, 17]
+    initialLessonId ? [initialLessonId] : []
   );
   const [selectedAtoms, setSelectedAtoms] = useState<string[]>([]);
   const [selectedDiscipline, setSelectedDiscipline] = useState<Discipline | "all">("all");
@@ -150,7 +150,49 @@ export const SmartKnowledgeExport: React.FC<SmartKnowledgeExportProps> = ({
         });
         setExerciseFilters(DEFAULT_EXERCISE_FILTER);
         break;
+      case "student_pack":
+        setLayers({
+          includeCore: true,
+          includePrereq: false,
+          includePractice: true,
+          includeApplication: true,
+          includeTransfer: false,
+          includeExtension: false
+        });
+        setExerciseFilters({
+          difficulties: [1, 2, 3],
+          cognitiveLevels: ["recognition", "comprehension", "application"],
+          questionTypes: ["multiple_choice", "calculation", "phenomenon_explanation"],
+          maxPerLesson: 5
+        });
+        break;
+      case "exam_prep":
+        setLayers({
+          includeCore: true,
+          includePrereq: true,
+          includePractice: true,
+          includeApplication: false,
+          includeTransfer: false,
+          includeExtension: false
+        });
+        setExerciseFilters({
+          difficulties: [2, 3, 4, 5],
+          cognitiveLevels: ["comprehension", "application", "high_application"],
+          questionTypes: ["multiple_choice", "calculation", "data_analysis", "transfer"],
+          maxPerLesson: 8
+        });
+        break;
       case "teacher_pack":
+        setLayers({
+          includeCore: true,
+          includePrereq: true,
+          includePractice: true,
+          includeApplication: true,
+          includeTransfer: true,
+          includeExtension: true
+        });
+        setExerciseFilters(DEFAULT_EXERCISE_FILTER);
+        break;
       case "full_knowledge":
       default:
         setLayers(DEFAULT_LAYER_CONFIG);
